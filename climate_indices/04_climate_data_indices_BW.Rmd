@@ -1,16 +1,4 @@
----
-title: "Exercise: Big data, climate indices and spatial mapping"
-output:
-  html_notebook:
-    number_sections: yes
-    toc: yes
-    toc_float: yes
-  html_document:
-    df_print: paged
-    number_sections: yes
-  pdf_document:
-    latex_engine: xelatex
----
+
 
 # Introduction
 
@@ -202,9 +190,3 @@ indexABC <- function(x, y, base_period = 1977:1996, detailed.analysis = FALSE) {
 test_result <- indexABC(x=climate$date, y=climate$values)
 
 ```
-
-# Function repository on github.com
-
-Go to https://github.com/modche/datacourse2018/tree/master/climate_indices
-
-![Figure:Screenshot github.com](github_clim_index.png){width=90%}
