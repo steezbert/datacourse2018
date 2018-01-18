@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------------------------------------
-#Topic 4: Big data - DWD Stations with 40 years "Climate Data Baden-Württemberg"
+#Topic 4: Big data - DWD Stations with 40 years "Climate Data Baden-WÃ¼rttemberg"
 #
 #Indicator HWDI: heat wave duration index
 #
