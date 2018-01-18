@@ -60,7 +60,7 @@ R5d_mean <- mean(df6$R5d) #<- 77.183
 df7796 <- df6 %>%  filter(year >= 1977, year <= 1996) 
 df9716 <- df6 %>%  filter(year >= 1997, year <= 2016) 
 
-df_diff <- abs(((mean(df9716$R5d)/mean(df7796$R5d))*100)-100)
+df_diff <- mean(df9716$R5d)/mean(df7796$R5d)*100
 # -> 15.947
 
 return(list(df6$R5d, R5d_mean, df_diff))
