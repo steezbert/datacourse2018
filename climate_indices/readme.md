@@ -13,3 +13,11 @@ You can report issues in the Issue section above. Please be friendly to other gr
 
  1. You can provide updates of your R function by e-mail. Just send the new code to the lecturer.
  2. If you have a Github account you can a) `fork` the repository and then b) `commit` changes and create a `pull request` to be reviewed by the lecturers.
+
+## Submit changes/new files with GitHub in a nutshell (from M. Maelicke)
+  1. Create a GitHub account 
+  2. fork the main course [project](https://github.com/modche/datacourse2018)
+  3. use *your fork* to create a project in RStudio
+  4. Commit and push changes into your copy. You can also invite other to collaborate on your copy.
+  5. Once your're finished, create a *pull request* from your project into the main project. We will review and comment your changes. In case we are satisfied, this pull is accepted and will be merged into the main project.
+  6. In case the main project got updated, you can *pull request* the main projcet into your fork and directly accept this merge. Then pull the latest verision in RStudio and voilá.
