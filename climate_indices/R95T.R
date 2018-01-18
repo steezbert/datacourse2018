@@ -134,7 +134,7 @@ R95T <- function(data=data, station.id = station.id, time.start = F, time.end = 
     
     mean.1977_1996 <- days.percent2 %>% filter(year>=1977, year <= 1996) %>%  summarise(mean(percent, na.rm = T))
     
-    rate.change <- mean.1997_2016 / mean.1977_1996 #thats the result :D
+    rate.change <- mean.1997_2016 / mean.1977_1996 * 100 #thats the result :D
     
     
     mean.all <- mean(days.percent2$percent, na.rm = T) #thats the other result :)
