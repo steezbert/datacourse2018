@@ -25,8 +25,7 @@ GSL <- function(date, temp) {
       period_len <-  df %>% count(period) %>% 
                       mutate(test10y = n>=3652) %>% # at least two leap years
                       summarise(test=any(test10y)) %>% as.logical()
-     
-    
+       
     # calculate index  
       df2 <- df %>% arrange(date) %>% group_by(year) %>% 
                 mutate(start = mnt(temp), end = mxt(temp)) 
