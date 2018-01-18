@@ -7,3 +7,5 @@ options(tibble.print_max = 15, tibble.print_min = 15)
 library(tidyverse)
 df <- mtcars
 glimpse(df)
+
+head(df)

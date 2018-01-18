@@ -1,0 +1,192 @@
+
+
+# Introduction
+
+We're leaving Freiburg and our HOBO-timeseries going to big(ger) datasets and a larger spatial scale. Now we are using a selection of 30 DWD-stations in Baden-Württemberg with different hydrometeorological variables.
+
+## Assignment
+Go to the GoogleSheet (Metafile) and indicate what station you work with and assign also for the groupwork in the Indices Sheet (groups of 2-3 people per index).
+
+https://docs.google.com/spreadsheets/d/1lAU7Qgjcfhhc13QX3gf6sLY3Zr1P-rY_h8KD9wGRgBI/edit#gid=797479261
+
+
+## Data
+Data is available in a `tibble`-data_frame on the Moodle site. Download it and unzip the file. Data is stored tabstop-separated, you can use `read_tsv()` from the tidyverse-packages. The tidyverse resources (e.g. packages dplyr, ggplot etc.) are highly recommended for this exercise.
+
+Each station has data with daily time step. That means each station has 40 years * 365.25 days = 14490 rows. For 30 stations you get over 400,000 rows in your data frame, so you start data mining with big data now ;) Of course you start to filter (subset the data) like ` %>% filter(id == 1234)` to focus on your station first!
+
+## The workflow for this exercise
+
+ * You (alone) are responsible for one station.
+ * Your group is responsible to deliver a R function for one index calculation.
+ * "First come first serve" to choose a station and a index.   
+ * You can use later on the provided R functions from the other groups to calculate all your indices for your station. If you have to wait you can also calculate the indices for yourself.
+ * All R functions will be available on github.com (see Section 4)
+ * If you find errors in functions from other students, please discuss the issue and help to provide an update of the R function.
+ 
+![Figure: Flow chart Exercise "Climate Index BW"](flowchart_climate_index.png){ width=50% }
+
+# Climate indices: BW stations (2nd week)
+
+Now we're leaving Freiburg going to the scale of the state Baden-Württemberg (BW). Around 30 climate stations from DWD (German Weather Service) are avaiable for analyses. The daily timeseries have data on precipitation, temperature (min/mean/max) and other variables. The period of record varies from station to station, but very often the main period 1977-2016 (40 years) is covered. However, all stations (all variables) have some `NA`-values that shoould be considered during further analysis.
+
+## Aim(s)
+
+The aim is to visualize how the climate has (not) changed at certain points in Baden-Württemberg. This exercise is a combination of temporal station data and spatial data that will be available through the index calculation. At the end maps of Baden-Württemberg can be created with let's say 20-25 point informations and a spatial pattern hopefully will emerge from this pattern of points, at least for some of the indices.
+
+## Climate indices
+
+To have the data basis for that we need all of you to calculate
+
+ 1. the average of your index based on the annual values you have calculated, but also
+ 2. a rate of change that is defined for each Index ABC as:
+ 
+ $$ \Delta ABC = \frac{ABC_{1997-2016}} {ABC_{1977-1996}} $$
+to quantify the change in Index value between the first 20 years and the last 20 years of the time series. Note that _1997-2016_ is _1997-01-01_ until _2016-12-31_ and _1977-1996_ is _1977-01-01_ until _1996-12-31_.
+
+ * Then all indices should be calculated for each station. The index calculation is prepared in groups (2-3 persons). Each group generates a genric function in R to calcualte a specific index. Therefore the group should also fill the names of all persons in the group into the meta list.
+
+ * There are two indices that relate calculation to the climatic normal period (1961-1990). As you do not have the data for this period, please put your "climatic normal period" to 1977-1996 (just first 20 years).
+
+* Please be aware of the listed units for each index! It is very important that each group consider the required units for index calculating!!!
+
+* Your R function should calculate _at least_ the _two_ index values listed above.
+
+## List of avaiable indices
+
+Index #143 and #144 might be good for a group with more advanced R skills, the other indices are more on the "beginner" or "intermediate" level, let's have a look.
+
+![Figure: List of indices to access climate change](frich_index.png)
+
+
+
+Read/check the corresponding paper (Frich et al. on Moodle) and discuss the specific functionality of your index o r the other indices. Which indices are based on precipiation? Which indcies are based on temperature? Does the index characterize a specific "part" (e.g. wetness, seasonality, extrem events etc...) of the climate in Baden-Württemberg? ... ...
+
+
+## Meta information for the 30 climate stations
+
+![Figure: 30 Climate stations in BW, here overview of mean temperature.](bwtemp.png){width=80%}
+
+You can load the _DWD Climate Stations BW Metafile_ from Moodle to your R environment to inspect the meta data of the stations.
+
+You can create a simple map (shape contour) of Baden-Württemberg as a `geom_polygon` with `ggplot`. Data for that is stored in `bw_shape.txt` (Downoad in Moodle). More sophisticated solutions are e.g. possible with QGIS or the R package `ggmap`.
+
+```{r, eval = FALSE}
+# not run, example code:
+shape <- read_tsv("bw_shape.txt")
+ggplot(data = shape , aes(x = coordsx , y = coordsy)) + 
+    geom_polygon(fill="white", colour="grey50", size=1)
+```
+
+
+
+![Figure: Map of 30 Climate stations in BW.](bwmap.png){width=80%}
+
+
+|   id|station                     |short_stat |    lat|     lon| elev|
+|----:|:----------------------|:----------|------:|-------:|----:|
+|  257|Baden_Baden_Geroldsau       |BADE       | 48.727|  8.2458|  240|
+|  259|Muellheim                   |MUEL       | 47.806|  7.6387|  273|
+|  755|Buchen_Kr_Neckar_Odenwald   |BUCH       | 49.518|  9.3213|  340|
+| 1197|Ellwangen_Rindelbach        |ELLW       | 48.989| 10.1312|  460|
+| 1224|Emmendingen_Mundingen       |EMME       | 48.138|  7.8351|  201|
+| 1346|Feldberg_Schwarzwald        |FELD       | 47.875|  8.0038| 1490|
+| 1443|Freiburg                    |FREI       | 48.023|  7.8344|  236|
+| 1468|Freudenstadt                |FREU       | 48.454|  8.4091|  797|
+| 1602|Ohlsbach                    |OHLS       | 48.433|  7.9931|  176|
+| 2074|Hechingen                   |HECH       | 48.375|  8.9801|  522|
+| 2638|Klippeneck                  |KLIP       | 48.105|  8.7549|  973|
+| 2712|Konstanz                    |KONS       | 47.677|  9.1901|  443|
+| 2814|Merklingen                  |MERK       | 48.512|  9.7645|  685|
+| 3257|Mergentheim_Bad_Neunkirchen |MERG       | 49.477|  9.7622|  250|
+| 3402|Muensingen_Apfelstetten     |MUEN       | 48.385|  9.4837|  750|
+| 3761|Oehringen                   |OEHR       | 49.207|  9.5175|  276|
+| 3927|Pfullendorf                 |PFUL       | 47.934|  9.2869|  630|
+| 4094|Weingarten_Kr_Ravensburg    |WEIN       | 47.806|  9.6206|  440|
+| 4169|Rheinau_Memprechtshofen     |RHEM       | 48.670|  7.9939|  131|
+| 4175|Rheinfelden                 |RHEI       | 47.559|  7.7721|  282|
+| 4300|Rottweil                    |ROTT       | 48.181|  8.6356|  588|
+| 4703|Sigmaringen_Laiz            |SIGM       | 48.072|  9.1942|  580|
+| 4887|Stoetten                    |STOE       | 48.666|  9.8646|  734|
+| 4928|Stuttgart_Schnarrenberg     |STSC       | 48.828|  9.2000|  314|
+| 4931|Stuttgart_Echterdingen      |STEC       | 48.688|  9.2235|  371|
+| 5229|Villingen_Schwenningen      |VISC       | 48.045|  8.4608|  720|
+| 5275|Waghaeusel_Kirrlach         |WAKI       | 49.245|  8.5374|  105|
+| 5664|Wolfach                     |WOLF       | 48.295|  8.2391|  291|
+| 5731|Wutoeschingen_Ofteringen    |WUTO       | 47.678|  8.3801|  398|
+| 5906|Mannheim                    |MANN       | 49.509|  8.5541|   96|
+
+
+----
+
+![Figure: NA-values (Prec/Temp) in the data set.](na_values.png){width=98%}
+ 
+----
+
+# Functions in R
+
+Each climate index should be nested into a R function. Each R function is then loaded on Github to calculate the climate index for other climate stations.
+
+**Discuss in your group:**
+
+ * What is the aim of the function? What is a good way to code it?
+ * What is the input data and in how is this input date formatted?
+ * Do you have checks for data types and do you stop the function if the data type is wrong?
+ * What data requirements (e.g. amount of NA) should be considered?
+ * Have you tested the function with different climate stations/data sets?
+ 
+
+Take a break and go to http://r4ds.had.co.nz/functions.html (Book: R for Data Science, Chapter #19 Function):
+
+
+![Figure:Overview #19 Functions](rdatascience_19functions.png){width=30%}
+
+
+--- 
+
+## Function dummy code (kind of perceptual model)
+
+```{r, eval = FALSE}
+# ----- Some suggestions for an R function  -----
+# ----- Not run, dummy code.  -----
+
+indexABC <- function(x, y, base_period = 1977:1996, detailed.analysis = FALSE) {
+  # ----- Breaks -----
+  if (!is.Date(x)) stop("x is not Date format.")
+  if (!is.numeric(y)) stop("y is not in numeric format.")
+  ...
+  ...
+  
+  # ----- Are packarges required?-----
+  require(dplyr)
+  require(lubridate)
+  ...
+  ...
+  
+  # ----- Prepare variables for calculation -----
+  data <- as.tible(x,y)
+  ...
+  ...
+  
+  # ----- More quality checks... -----
+  data %>% filter(years with less then 60 NA-values)
+  length(data$years) >= 10
+  ...
+  ...
+  
+  # ----- Detailed analysis part here-----
+  if (detailed.analysis) {
+    ...
+    ...
+    ...
+  }
+  
+  # ----- Return the values-----
+  result <- list(m=mean(x), p1=period1, p2=period2, r=ratio)
+  return(result)
+}
+
+# ----- Test the code-----
+test_result <- indexABC(x=climate$date, y=climate$values)
+
+```
