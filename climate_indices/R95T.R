@@ -40,8 +40,7 @@
 #time.start and time.end define the time interval for the 95 percentile reference. type a year! e. g. 1999 year should be part of the dataframe 
 #if nothing is choosen time.start is the first year and time.end is 20 years later
 R95T <- function(data=data, station.id = station.id, time.start = F, time.end = F){
-    
-    #check for input
+
     
     # Packages
     
@@ -111,7 +110,7 @@ R95T <- function(data=data, station.id = station.id, time.start = F, time.end = 
     # % days with more than q95 rain / for total days with rain (>1mm) 
     #per each year
     
-    days.1mm <- d_new %>%  filter(RSK >= 1 ) %>% group_by(year) %>% 
+    days.1mm <- d_1mm %>% group_by(year) %>% 
         summarise(count.1mm = length(RSK))
     
     days.q95 <- d_new %>%  filter(RSK >= q95) %>% group_by(year) %>% 
@@ -119,7 +118,7 @@ R95T <- function(data=data, station.id = station.id, time.start = F, time.end = 
     
     days.percent <- data.frame(year = unique(d_station$year))
     days.percent <- merge(data.frame(year = unique(d_station$year)), days.1mm, by = "year", all.x = T)
-    days.percent <- merge(days.percent, days.q95, by = "year", all.x = T)
+    days.percent <- merge(days.percent, days.q95, by = "year", all.x = T) #for getting all years as reference
     days.percent2 <- days.percent %>% mutate(percent = count.q95 /count.1mm * 100) %>% 
         select(year, percent)
     
@@ -150,6 +149,6 @@ R95T <- function(data=data, station.id = station.id, time.start = F, time.end = 
     
     last.year <- d_new[nrow(d_new), "year"]
     
-    return(c("mean.all" = mean.all, "rate.change" = rate.change, paste("the mean R95T from", first.year, "to", last.year, "is: ", round(mean.all,2), "% --- and the change of average from 1997 - 2016 related to average from 1977 - 1996 is", round(rate.change*100,2),"%"), errors))
+    return(c("mean.all" = mean.all, "rate.change" = rate.change, paste("the mean R95T from", first.year, "to", last.year, "is: ", round(mean.all,2), "% --- and the change of average from 1997 - 2016 related to average from 1977 - 1996 is", round(rate.change,2),"%"), errors))
     
 }
