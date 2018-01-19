@@ -7,22 +7,29 @@
 #------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------
-#loading data
+#easiest way to run function
 #------------------------------------------------------------------------------------------------------------
+#load function into R
+#uncomment the followig Code and use it to load, prepare and execute the function with data
 
-#set path to load your DWD data
-#main path
-  main_path <- "C:/Users/user/Desktop/Data_Management/"
+# #set path to load your DWD data
+# #main path
+#   main_path <- "C:/Users/user/Desktop/Data_Management/"
+#  
+# #data path
+#   data_path <- paste0(main_path)
+#   file_name1 <- "BW_Climate_1977_2016.txt"
   
-#data path
-  data_path <- paste0(main_path)
-  file_name1 <- "BW_Climate_1977_2016.txt"
+# #import
+#   data <- read.csv(paste0(data_path, file_name1), sep = "\t", dec = ".", header = TRUE)
   
-#import
-  data <- read.csv(paste0(data_path, file_name1), sep = "\t", dec = ".", header = TRUE)
-  
-#change date format to date
-  data$as_date <- as.Date(data$date, format = "%Y-%m-%d")
+# #change date format to date
+#   data$as_date <- as.Date(data$date, format = "%Y-%m-%d")
+#
+# #change station_id to calculate the heat wave indices for your station
+#   station_id <- 755
+#   result <- HWDI(data, station_id)
+#   print(result)
 
 #------------------------------------------------------------------------------------------------------------
 #function
@@ -140,13 +147,3 @@
     #output
       return(HWI_indices)
   }
-
-#------------------------------------------------------------------------------------------------------------
-#result
-#------------------------------------------------------------------------------------------------------------      
-
-#change station_id to calculate the heat wave indices for your station
-  station_id <- 755
-  result <- HWDI(data, station_id)
-  print(result)
-  
